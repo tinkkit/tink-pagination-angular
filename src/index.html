@@ -1,0 +1,191 @@
+<!doctype html>
+<html ng-app="tink.pagination">
+<head>
+  <meta charset="utf-8">
+  <title>Tink module</title>
+  <meta name="description" content="">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="initial-scale=1.0,user-scalable=no,minimum-scale=1.0">
+  <!-- bower:css -->
+  <link rel="stylesheet" href="bower_components/tink-core/dist/tink.css" />
+  <!-- endbower -->
+  <style>
+/*.indeterminate{
+  content: '\f068';
+  line-height: 1.4;
+  opacity: 1;
+  -webkit-transform: scale(1);
+  -ms-transform: scale(1);
+  transform: scale(1);
+}*/
+</style>
+</head>
+<body ng-controller="ctrl as ct">
+
+<div class="container">
+<!-- bower:js -->
+<script src="bower_components/jquery/dist/jquery.js"></script>
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/angular-resource/angular-resource.js"></script>
+<script src="bower_components/angular-cookies/angular-cookies.js"></script>
+<script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+<script src="bower_components/angular-animate/angular-animate.js"></script>
+<script src="bower_components/angular-touch/angular-touch.js"></script>
+<script src="bower_components/angular-route/angular-route.js"></script>
+<script src="bower_components/ng-lodash/build/ng-lodash.js"></script>
+<script src="bower_components/tink-helper-safe-apply-angular/dist/tink-helper-safe-apply-angular.js"></script>
+<!-- endbower -->
+<script src="scripts/directives/tink-pagination.js"></script>
+
+<br/><br/><br/>
+
+  <tink-pagination  tink-current-page="ct.nums" tink-change="changed(page,perPage,next)" tink-total-items="ct.totalitems" tink-items-per-page="ct.numpp"></tink-pagination>
+
+
+<script>
+  var myApp;
+    try {
+      myApp = angular.module('tink.pagination');
+    } catch (e) {
+      myApp = angular.module('tink.pagination', ['ngLodash','tink.safeApply']);
+    }
+  myApp.controller('ctrl', ['$scope','$timeout', function(scope,timeout) {
+    var ctrl = this;
+
+      ctrl.nums = 2;
+      ctrl.totalitems = 1024;
+      ctrl.numpp = 5;
+      ctrl.asc = true;
+      scope.data = {};
+
+      scope.load=function(){
+        console.log('clicked')
+      }
+      scope.changed = function(type,value,fn){
+        console.log(type,value,fn)
+      }
+      scope.sorted = function(property,order,type){
+        console.log('sorted',property,order,type);
+      }
+      scope.boxChecked = function($data,c){
+        console.log($data,c)
+      }
+
+      ctrl.loading = false;
+
+      scope.data.content = [
+
+        {
+          firstname: 'Tom',
+          lastname: 'Wuyts',
+          username: '@pxlpanic'
+        },
+        {
+          firstname: 'Jasper',
+          lastname: 'Van Proeyen',
+          username: '@trianglejuice'
+        }
+      ];
+      scope.actions = [
+        {
+          name: 'remove',
+          callback: function(items) {
+            angular.forEach(items, function(val) {
+              scope.data.content.splice(scope.data.content.indexOf(val),1);
+            });
+          },
+          order:1,
+          master:true,
+          icon:'fa-close',
+          alwaysEnabled:true,
+        },{
+          name: 'add',
+          callback: function(items) {
+            angular.forEach(items, function(val) {
+              // scope.data.content.splice(scope.data.content.indexOf(val),1);
+              scope.data.content.push({
+                firstname: 'New first',
+                lastname: 'New last',
+                username: '@newuser'
+              })
+              console.log('Added ' + val.firstname);
+            });
+          },
+          order:2,
+          master:true,
+          alwaysEnabled:true,
+          icon:'fa-edit'
+        },{
+          name: 'search',
+          callback: function(items) {
+            angular.forEach(items, function(val) {
+              // scope.data.content.splice(scope.data.content.indexOf(val),1);
+              console.log('Searched ' + val.firstname);
+            });
+          },
+          order:100,
+          master:true,
+          alwaysEnabled:true,
+          icon:'fa-search'
+        },
+        {
+          name: 'do something',
+          callback: function(items) {console.log('callback go');
+            angular.forEach(items, function(val) {
+              // scope.data.content.splice(scope.data.content.indexOf(val),1);
+              console.log('Did something with ' + val.firstname);
+            });
+          },
+          order:100,
+          master:false,
+          icon:'fa-arrows-h',
+          alwaysEnabled:true
+        },
+        {
+          name: 'open',
+          callback: function(items) {
+            angular.forEach(items, function(val) {
+              // scope.data.content.splice(scope.data.content.indexOf(val),1);
+              console.log('Opened ' + val.firstname);
+            });
+          },
+          order:100,
+          master:false,
+          icon:'fa-bell-o',
+          alwaysEnabled:true
+        }
+        ,
+        {
+          name: 'do something else',
+          callback: function(items) {
+            angular.forEach(items, function(val) {
+              // scope.data.content.splice(scope.data.content.indexOf(val),1);
+              console.log('Did something else with ' + val.firstname);
+            });
+          },
+          order:100,
+          master:false,
+          alwaysEnabled:true,
+          icon:'fa-calculator'
+        }
+      ];
+      scope.headers = [{
+        alias:'Voornaam',
+        sort:'firstname',
+        checked:true
+      },{
+        disabled:true,
+        alias:'Achternaam',
+        checked:true
+      },{
+        alias:'Gebruikersnaam',
+        sortalias:'User',
+        sort:'',
+        checked:true
+      }];
+
+  }]);
+</script>
+
+</body>
+</html>
