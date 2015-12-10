@@ -2,7 +2,7 @@
   "name": "tink-interactive-table-angular",
   "version": "1.0.0",
   "main": [
-    "dist/tink-interactive-table-angular.js"
+    "dist/tink-pagination-angular.js"
   ],
   "ignore": [
     ".*",
