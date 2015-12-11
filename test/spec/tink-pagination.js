@@ -48,8 +48,58 @@ describe('tink-pagination-angular', function() {
 
   describe('Current page', function() {
 
-    it('default',function(){
+    it('1-10',function(){
+      var element = compileDirective('default',{nums:1,totalitems:20,numpp:10});
+      var val = element.find('.table-sort-info strong').html();
+      expect(val).toBe('1 - 10');
+    });
 
+    it('11-20',function(){
+      var element = compileDirective('default',{nums:2,totalitems:20,numpp:10});
+      var val = element.find('.table-sort-info strong').html();
+      expect(val).toBe('11 - 20');
+    });
+
+    it('11-19',function(){
+      var element = compileDirective('default',{nums:2,totalitems:19,numpp:10});
+      var val = element.find('.table-sort-info strong').html();
+      expect(val).toBe('11 - 19');
+    });
+
+    it('zero',function(){
+      var element = compileDirective('default',{nums:1,totalitems:undefined,numpp:10});
+      var val = element.find('.table-sort-info .table-total-rows-info').html();
+      expect(val).toBe('0');
+    });
+
+    it('100',function(){
+      var element = compileDirective('default',{nums:1,totalitems:100,numpp:10});
+      var val = element.find('.table-sort-info .table-total-rows-info').html();
+      expect(val).toBe('100');
+    });
+
+    it('active page 1',function(){
+      var element = compileDirective('default',{nums:1,totalitems:100,numpp:10});
+      var activePage = element.find('.btn.active span').html()
+      expect(activePage).toBe('1');
+    });
+
+    it('active page 5',function(){
+      var element = compileDirective('default',{nums:5,totalitems:100,numpp:10});
+      var activePage = element.find('.btn.active span').html()
+      expect(activePage).toBe('5');
+    });
+
+    it('active page 5 with not that many elements',function(){
+      var element = compileDirective('default',{nums:5,totalitems:10,numpp:10});
+      var activePage = element.find('.btn.active span').html()
+      expect(activePage).toBe('1');
+    });
+
+    it('active page undefined',function(){
+      var element = compileDirective('default',{nums:undefined,totalitems:10,numpp:10});
+      var activePage = element.find('.btn.active span').html()
+      expect(activePage).toBe('1');
     });
 
   });

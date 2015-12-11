@@ -1,6 +1,6 @@
 <div class="table-sort-options" >
   <div class="table-sort-info">
-    <strong>{{tinkTotalItems > 0 ? (tinkItemsPerPage*(tinkCurrentPage-1)+1 | number:0) : '0'}} - {{tinkItemsPerPage*tinkCurrentPage | limitNum:tinkTotalItems | tinkMin:0 | number:0}}</strong> van {{tinkTotalItems | tinkMin:0 | number:0}}
+    <strong>{{tinkTotalItems > 0 ? (tinkItemsPerPage*(tinkCurrentPage-1)+1 | number:0) : '0'}} - {{tinkTotalItems > 0 ? (tinkItemsPerPage*tinkCurrentPage | limitNum:tinkTotalItems | tinkMin:0 | number:0) : '0'}}</strong> van <span class="table-total-rows-info">{{tinkTotalItems | tinkMin:0 | number:0}}</span>
 
     <div class="select">
       <select data-ng-change="ctrl.perPageChange()" data-ng-model="tinkItemsPerPage" ng-options="o as o for o in ctrl.itemsPerPage()">>

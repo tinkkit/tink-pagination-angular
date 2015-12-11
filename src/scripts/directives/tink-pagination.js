@@ -128,10 +128,14 @@
     if(limit === undefined){
       limit = 0;
     }
-      if (input < limit) {
-          return limit;
-      }
-      return input;
+    if(input === undefined || input === null){
+      return 0;
+    }
+    
+    if (input < limit) {
+        return limit;
+    }
+    return input;
    };
   }])
   .filter('tinkNumber', [function() {
