@@ -1,7 +1,11 @@
 'use strict';
 describe('tink-pagination-angular', function() {
 
+  beforeEach(module('ngAnimate'));
+  beforeEach(module('ngAnimateMock'));
+  beforeEach(module('ngSanitize'));
   beforeEach(module('tink.pagination'));
+  beforeEach(module('templates'));
 
   var bodyEl = $('body'), sandboxEl;
   var $compile, $templateCache, scope;
@@ -12,11 +16,13 @@ describe('tink-pagination-angular', function() {
     scope = _$rootScope_.$new();
     $compile = _$compile_;
     $templateCache = _$templateCache_;
-    bodyEl.html('');
-    sandboxEl = $('<div>').attr('id', 'sandbox').appendTo(bodyEl);
+    
 
     var template = $templateCache.get('src/templates/pagination.html');
     $templateCache.put('templates/pagination.html',template);
+
+    bodyEl.html('');
+    sandboxEl = $('<div>').attr('id', 'sandbox').appendTo(bodyEl);
   }));
 
   afterEach(function() {
@@ -35,18 +41,41 @@ describe('tink-pagination-angular', function() {
 
   var templates = {
     'default': {
-      scope: {nums:1,numpp:5,totalitems:100},
-      element: '<tink-pagination  tink-current-page="nums" tink-change="changed(page,perPage,next)" tink-total-items="totalitems" tink-items-per-page="numpp"></tink-pagination>'
+      scope: {nums:1,numpp:5,totalitems:100,tinkItemsPerPageValues:undefined},
+      element: '<tink-pagination tink-items-per-page-values="tinkItemsPerPageValues" tink-current-page="nums" tink-change="changed(page,perPage,next)" tink-total-items="totalitems" tink-items-per-page="numpp"></tink-pagination>'
     }
   };
 
+  describe('Current page', function() {
 
-  describe('default', function() {
-    it('should run this basic setup',function(){
+    it('default',function(){
+
+    });
+
+  });
+
+  describe('perPage', function() {
+    it('default',function(){
       var element = compileDirective('default');
-      console.log(element);
+      var options = element.find('div.select option');
+      var array = []
+      for(var i=0;i<options.length;i++){
+        array.push(parseInt($(options.get(i)).html()))
+      }
+      expect(array).toEqual([5,10,20,30]);
+    });
+
+    it('change the values',function(){
+      var element = compileDirective('default',{nums:1,numpp:5,totalitems:100,tinkItemsPerPageValues:[5,15,30,50]});
+      var options = element.find('div.select option');
+      var array = []
+      for(var i=0;i<options.length;i++){
+        array.push(parseInt($(options.get(i)).html()))
+      }
+      expect(array).toEqual([5,15,30,50]);
     });
   });
+
 
 
 });
