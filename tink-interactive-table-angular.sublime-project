@@ -20,7 +20,7 @@
 				"dist",
 				"node_modules"
 			],
-			"name": "tink-interactive-table-angular",
+			"name": "tink-pagination-angular",
 			"path": "/"
 		}
 	],

@@ -1,6 +1,6 @@
 {
   "name": "tink-pagination-angular",
-  "description": "Tink interactive table Angular directive",
+  "description": "Tink pagination Angular directive",
   "version": "1.0.0",
   "repository": {
     "type": "git",
