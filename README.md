@@ -1,6 +1,6 @@
 # Tink pagination Angular directive
 
-v1.0.1
+v2.0.0
 
 ## What is this repository for?
 
